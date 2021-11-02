@@ -2,7 +2,7 @@ import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "dat.gui";
-import { ambientLight, doorLight, moonLight } from "./lights";
+import { ambientLight, doorLight, moonLight, secondDoorLight } from "./lights";
 import house from "./components/house";
 import twoStoryHouse from "./components/twoStoryhouse";
 import { floor } from "./components/floor";
@@ -53,6 +53,7 @@ scene.add(
   ambientLight,
   moonLight,
   doorLight,
+  secondDoorLight,
   floor,
   graves,
   ghost1,
