@@ -4,6 +4,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "dat.gui";
 import { ambientLight, doorLight, moonLight } from "./lights";
 import house from "./components/house";
+import twoStoryHouse from "./components/twoStoryhouse";
 import { floor } from "./components/floor";
 import { ghost1, ghost2, ghost3 } from "./components/ghosts";
 
@@ -16,6 +17,7 @@ const scene = new THREE.Scene();
 
 /* Components ------------------------------------------------------------- */
 house(scene);
+twoStoryHouse(scene);
 
 // Graves material & logic
 const graves = new THREE.Group();
