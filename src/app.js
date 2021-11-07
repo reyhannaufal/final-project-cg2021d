@@ -7,6 +7,7 @@ import house from "./components/house";
 import twoStoryHouse from "./components/twoStoryhouse";
 import { floor } from "./components/floor";
 import { ghost1, ghost2, ghost3 } from "./components/ghosts";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 // Debug
 const gui = new dat.GUI();
@@ -16,8 +17,8 @@ const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
 
 /* Components ------------------------------------------------------------- */
-house(scene);
-twoStoryHouse(scene);
+// house(scene);
+// twoStoryHouse(scene);
 
 // Graves material & logic
 const graves = new THREE.Group();
@@ -148,5 +149,22 @@ const tick = () => {
   // Call tick again on the next frame
   window.requestAnimationFrame(tick);
 };
+
+const loader = new GLTFLoader();
+
+loader.load(
+  "models/house/scene.gltf",
+  function (gltf) {
+    const model = gltf.scene;
+    model.position;
+    model.position.set(0, 0.1, 0);
+    model.scale.set(0.01, 0.01, 0.01);
+    scene.add(model);
+  },
+  undefined,
+  function (error) {
+    console.error(error);
+  }
+);
 
 tick();
