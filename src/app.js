@@ -5,7 +5,7 @@ import house from "./components/house";
 import { floor } from "./components/floor";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { ambientLight, doorLight, moonLight } from "./lights";
-import { ghost1, ghost2, ghost3 } from "./components/ghosts";
+import { ghosts } from "./components/ghosts";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 // Debug
@@ -48,16 +48,7 @@ for (let i = 0; i < 50; i++) {
 const fog = new THREE.Fog("#262837", 1, 15);
 scene.fog = fog;
 
-scene.add(
-  ambientLight,
-  moonLight,
-  doorLight,
-  floor,
-  graves,
-  ghost1,
-  ghost2,
-  ghost3
-);
+scene.add(ambientLight, moonLight, doorLight, floor, graves);
 
 /**
  * Sizes
@@ -121,21 +112,20 @@ const tick = () => {
   const elapsedTime = clock.getElapsedTime();
 
   // Ghosts
-  const ghost1Angle = elapsedTime * 0.5;
-  ghost1.position.x = Math.cos(ghost1Angle) * 4;
-  ghost1.position.z = Math.sin(ghost1Angle) * 4;
-  ghost1.position.y = Math.sin(elapsedTime * 3);
+  for (let i = 0; i < ghosts.length; i++) {
+    const originalPosition = new THREE.Vector3();
+    const newPosition = new THREE.Vector3();
 
-  const ghost2Angle = -elapsedTime * 0.32;
-  ghost2.position.x = Math.cos(ghost2Angle) * 5;
-  ghost2.position.z = Math.sin(ghost2Angle) * 5;
-  ghost2.position.y = Math.sin(elapsedTime * 4) + Math.sin(elapsedTime * 2.5);
+    ghostGroups[i].children[1].getWorldPosition(originalPosition);
+    ghostGroups[i].position.set(...ghosts[i].getPosition(elapsedTime));
+    ghostGroups[i].children[1].getWorldPosition(newPosition);
 
-  const ghost3Angle = -elapsedTime * 0.18;
-  ghost3.position.x =
-    Math.cos(ghost3Angle) * (7 + Math.sin(elapsedTime * 0.32));
-  ghost3.position.z = Math.sin(ghost3Angle) * (7 + Math.sin(elapsedTime * 0.5));
-  ghost3.position.y = Math.sin(elapsedTime * 4) + Math.sin(elapsedTime * 2.5);
+    let displacement = newPosition.sub(originalPosition);
+    displacement.setY(2);
+    ghostGroups[i].children[1].lookAt(
+      ghostGroups[i].localToWorld(displacement)
+    );
+  }
 
   // Update controls
   controls.update();
@@ -151,24 +141,18 @@ const tick = () => {
  * Load model
  */
 const loader = new GLTFLoader();
-let ghostsGroup;
+let ghostGroups = [];
 loader.load(
   "/models/boo_halloween2019/scene.gltf",
   (gltf) => {
-    let root = gltf.scene;
-    let gltfObj = root.children[0];
-    gltfObj.position.set(4.5, 1, 4.5);
-    scene.add(gltfObj);
-    // obj = root;
-
-    const ghostLight = new THREE.PointLight("#00ffff", 3, 3);
-    ghostLight.position.set(4.5, 1, 4.5);
-    ghostLight.castShadow = true;
-    ghostLight.shadow.mapSize.width = 256;
-    ghostLight.shadow.mapSize.height = 256;
-    ghostLight.shadow.camera.far = 7;
-    scene.add(ghostLight);
-
+    for (let i = 0; i < ghosts.length; i++) {
+      const group = new THREE.Group(scene).add(
+        ghosts[i].light,
+        gltf.scene.clone().children[0]
+      );
+      scene.add(group);
+      ghostGroups.push(group);
+    }
     tick();
   },
   (xhr) => {
@@ -176,5 +160,6 @@ loader.load(
   },
   (error) => {
     console.log("An error happened");
+    console.log(error);
   }
 );
