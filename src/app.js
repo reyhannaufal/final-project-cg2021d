@@ -2,6 +2,7 @@ import "./style.css";
 import * as THREE from "three";
 import * as dat from "dat.gui";
 import house from "./components/house";
+import twoStoryHouse from "./components/twoStoryhouse";
 import { floor } from "./components/floor";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { ambientLight, doorLight, moonLight } from "./lights";
@@ -16,7 +17,8 @@ const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
 
 /* Components ------------------------------------------------------------- */
-house(scene);
+// house(scene);
+// twoStoryHouse(scene);
 
 // Graves material & logic
 const graves = new THREE.Group();
@@ -161,5 +163,19 @@ loader.load(
   (error) => {
     console.log("An error happened");
     console.log(error);
+  }
+);
+loader.load(
+  "models/house/scene.gltf",
+  function (gltf) {
+    const model = gltf.scene;
+    model.position;
+    model.position.set(0, 0.1, 0);
+    model.scale.set(0.01, 0.01, 0.01);
+    scene.add(model);
+  },
+  undefined,
+  function (error) {
+    console.error(error);
   }
 );
