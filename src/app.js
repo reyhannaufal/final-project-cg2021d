@@ -1,11 +1,12 @@
 import "./style.css";
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "dat.gui";
-import { ambientLight, doorLight, moonLight } from "./lights";
 import house from "./components/house";
 import { floor } from "./components/floor";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { ambientLight, doorLight, moonLight } from "./lights";
 import { ghost1, ghost2, ghost3 } from "./components/ghosts";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 // Debug
 const gui = new dat.GUI();
@@ -146,4 +147,34 @@ const tick = () => {
   window.requestAnimationFrame(tick);
 };
 
-tick();
+/**
+ * Load model
+ */
+const loader = new GLTFLoader();
+let ghostsGroup;
+loader.load(
+  "/models/boo_halloween2019/scene.gltf",
+  (gltf) => {
+    let root = gltf.scene;
+    let gltfObj = root.children[0];
+    gltfObj.position.set(4.5, 1, 4.5);
+    scene.add(gltfObj);
+    // obj = root;
+
+    const ghostLight = new THREE.PointLight("#00ffff", 3, 3);
+    ghostLight.position.set(4.5, 1, 4.5);
+    ghostLight.castShadow = true;
+    ghostLight.shadow.mapSize.width = 256;
+    ghostLight.shadow.mapSize.height = 256;
+    ghostLight.shadow.camera.far = 7;
+    scene.add(ghostLight);
+
+    tick();
+  },
+  (xhr) => {
+    console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+  },
+  (error) => {
+    console.log("An error happened");
+  }
+);
