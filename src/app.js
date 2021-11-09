@@ -16,6 +16,26 @@ const canvas = document.querySelector("canvas.webgl");
 
 const scene = new THREE.Scene();
 
+var progress = document.createElement("div");
+var progressBar = document.createElement("div");
+
+progress.appendChild(progressBar);
+
+document.body.appendChild(progress);
+
+var manager = new THREE.LoadingManager();
+manager.onProgress = function (item, loaded, total) {
+  console.log(item, loaded, total);
+  progressBar.style.width = (loaded / total) * 100 + "%";
+};
+
+function addRandomPlaceHoldItImage() {
+  var r = Math.round(Math.random() * 4000);
+  new THREE.ImageLoader(manager).load("//picsum.photos/" + r + "/" + r);
+}
+
+for (var i = 0; i < 10; i++) addRandomPlaceHoldItImage();
+
 /* Components ------------------------------------------------------------- */
 // house(scene);
 // twoStoryHouse(scene);
