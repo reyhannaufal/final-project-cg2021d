@@ -109,24 +109,29 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
  * Animate
  */
 const clock = new THREE.Clock();
+let animateGhost = true;
+let oldElapsedTime = 0;
+let clockwise = true;
 
 const tick = () => {
-  const elapsedTime = clock.getElapsedTime();
-
   // Ghosts
-  for (let i = 0; i < ghosts.length; i++) {
-    const originalPosition = new THREE.Vector3();
-    const newPosition = new THREE.Vector3();
+  if (animateGhost) {
+    const elapsedTime = clock.getElapsedTime() * (clockwise ? 1 : -1);
 
-    ghostGroups[i].children[1].getWorldPosition(originalPosition);
-    ghostGroups[i].position.set(...ghosts[i].getPosition(elapsedTime));
-    ghostGroups[i].children[1].getWorldPosition(newPosition);
+    for (let i = 0; i < ghosts.length; i++) {
+      const originalPosition = new THREE.Vector3();
+      const newPosition = new THREE.Vector3();
 
-    let displacement = newPosition.sub(originalPosition);
-    displacement.setY(2);
-    ghostGroups[i].children[1].lookAt(
-      ghostGroups[i].localToWorld(displacement)
-    );
+      ghostGroups[i].children[1].getWorldPosition(originalPosition);
+      ghostGroups[i].position.set(...ghosts[i].getPosition(elapsedTime));
+      ghostGroups[i].children[1].getWorldPosition(newPosition);
+
+      let displacement = newPosition.sub(originalPosition);
+      displacement.setY(2);
+      ghostGroups[i].children[1].lookAt(
+        ghostGroups[i].localToWorld(displacement)
+      );
+    }
   }
 
   // Update controls
@@ -138,6 +143,28 @@ const tick = () => {
   // Call tick again on the next frame
   window.requestAnimationFrame(tick);
 };
+
+document.addEventListener("keyup", (e) => {
+  switch (e.code) {
+    case "Space":
+      // Pause / resume ghost movement animation
+      if (e.code === "Space") {
+        animateGhost = !animateGhost;
+
+        if (clock.running) {
+          oldElapsedTime = clock.getElapsedTime();
+          clock.running = false;
+          return;
+        }
+        clock.start();
+        clock.elapsedTime = oldElapsedTime;
+      }
+      break;
+    case "KeyR":
+      clockwise = !clockwise;
+      break;
+  }
+});
 
 /**
  * Load model
