@@ -182,15 +182,15 @@ loader.load(
 );
 
 const parameterGalaxy = {};
-parameterGalaxy.count = 10000;
-parameterGalaxy.size = 0.02;
-parameterGalaxy.radius = 5;
-parameterGalaxy.branches = 3;
-parameterGalaxy.spin = 1;
-parameterGalaxy.randomness = 0.2;
-parameterGalaxy.randomnessPower = 3;
-parameterGalaxy.insideColor = "#FF6030";
-parameterGalaxy.outsideColor = "#1B3984";
+parameterGalaxy.count = 400;
+parameterGalaxy.size = 0.075;
+parameterGalaxy.radius = 20;
+parameterGalaxy.branches = 2;
+parameterGalaxy.spin = -5;
+parameterGalaxy.randomness = 2;
+parameterGalaxy.randomnessPower = 10;
+parameterGalaxy.insideColor = "#FFFFFF";
+parameterGalaxy.outsideColor = "#FFFFFF";
 
 let geometry = null;
 let material = null;
@@ -256,53 +256,8 @@ const generateGalaxy = () => {
   });
 
   points = new THREE.Points(geometry, material);
-  points.position.y = 10;
+  points.position.y = 7.5;
   scene.add(points);
 };
 
 generateGalaxy();
-
-gui
-  .add(parameterGalaxy, "count")
-  .min(100)
-  .max(100000)
-  .step(100)
-  .onFinishChange(generateGalaxy);
-gui
-  .add(parameterGalaxy, "size")
-  .min(0.001)
-  .max(0.1)
-  .step(0.001)
-  .onFinishChange(generateGalaxy);
-gui
-  .add(parameterGalaxy, "radius")
-  .min(0.1)
-  .max(20)
-  .step(0.01)
-  .onFinishChange(generateGalaxy);
-gui
-  .add(parameterGalaxy, "branches")
-  .min(2)
-  .max(20)
-  .step(1)
-  .onFinishChange(generateGalaxy);
-gui
-  .add(parameterGalaxy, "spin")
-  .min(-5)
-  .max(5)
-  .step(0.001)
-  .onFinishChange(generateGalaxy);
-gui
-  .add(parameterGalaxy, "randomness")
-  .min(0)
-  .max(2)
-  .step(0.001)
-  .onFinishChange(generateGalaxy);
-gui
-  .add(parameterGalaxy, "randomnessPower")
-  .min(1)
-  .max(10)
-  .step(0.001)
-  .onFinishChange(generateGalaxy);
-gui.addColor(parameterGalaxy, "insideColor").onFinishChange(generateGalaxy);
-gui.addColor(parameterGalaxy, "outsideColor").onFinishChange(generateGalaxy);
