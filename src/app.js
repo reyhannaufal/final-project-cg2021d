@@ -9,6 +9,7 @@ import { ambientLight, doorLight, moonLight } from "./lights";
 import { ghosts } from "./components/ghosts";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { WebGLMultisampleRenderTarget } from "three";
+import { graveTexture, graveTextureReflection } from "./projectTextures";
 
 // Debug
 const gui = new dat.GUI();
@@ -24,7 +25,10 @@ const scene = new THREE.Scene();
 // Graves material & logic
 const graves = new THREE.Group();
 const graveGeometry = new THREE.BoxBufferGeometry(0.6, 0.8, 0.1);
-const graveMaterial = new THREE.MeshStandardMaterial({ color: "#727272" });
+const graveMaterial = new THREE.MeshStandardMaterial({
+  map: graveTexture,
+  envMap: graveTextureReflection,
+});
 
 for (let i = 0; i < 50; i++) {
   const angle = Math.random() * Math.PI * 2; // Random angle
@@ -193,6 +197,7 @@ loader.load(
     console.log(error);
   }
 );
+
 loader.load(
   "models/house/scene.gltf",
   function (gltf) {
@@ -223,6 +228,7 @@ let geometry = null;
 let material = null;
 let points = null;
 
+// Star material
 const generateGalaxy = () => {
   if (points !== null) {
     geometry.dispose();
