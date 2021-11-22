@@ -46,6 +46,14 @@ export const grassRoughnessTexture = textureLoader.load(
   "/textures/grass/roughness.jpg"
 );
 
+export const graveTexture = textureLoader.load(
+  "/textures/tombstone/texture.jpg"
+);
+
+export const graveTextureReflection = textureLoader.load(
+  "/textures/tombstone/texturereflection.jpg"
+);
+
 grassColorTexture.repeat.set(8, 8);
 grassAmbientOcclusionTexture.repeat.set(8, 8);
 grassNormalTexture.repeat.set(8, 8);
