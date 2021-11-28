@@ -6,23 +6,51 @@
     <title>Final Project - CG2021 (D)</title>
   </head>
   <body>
-    <div class="menu">
-      <h1 class="title">Haunted House</h1>
-      <p class="_secret">Psst...hover the title</p>
-      <ul class="feature">
-        <li>Tekan <code>Spasi</code> untuk membuat hantu berhenti.</li>
-        <li>Tekan <code>R</code> untuk membuat hantu berubah arah.</li>
-        <li>
-          Gunakan <code>Mouse</code> anda untuk melihat dunia haunted house.
-        </li>
-      </ul>
-      <h2 class="creator-title">Creators</h2>
-      <ul class="creator-list">
-        <li>Thomax Felix Brilliant</li>
-        <li>William Handi Wijaya</li>
-        <li>Reyhan Naufal Rahman</li>
-      </ul>
+    <div class="wrapper-menu">
+      <div class="menu">
+        <h1 class="title">Haunted House</h1>
+        <p class="_secret">Psst...hover the title</p>
+        <ul class="feature">
+          <li>Tekan <code>Spasi</code> untuk membuat hantu berhenti.</li>
+          <li>Tekan <code>R</code> untuk membuat hantu berubah arah.</li>
+          <li>
+            Gunakan <code>Mouse</code> anda untuk melihat dunia haunted house.
+          </li>
+        </ul>
+        <h2 class="creator-title">Creators</h2>
+        <ul class="creator-list">
+          <li>Thomax Felix Brilliant</li>
+          <li>William Handi Wijaya</li>
+          <li>Reyhan Naufal Rahman</li>
+        </ul>
+        <button onclick="handleStartButtonClick()" class="start-menu">
+          Lesgo!
+        </button>
+        <button onclick="handleMainMenuButtonClick()" class="main-menu">
+          Main Menu
+        </button>
+      </div>
     </div>
     <canvas class="webgl"></canvas>
   </body>
+  <script>
+    const handleStartButtonClick = () => {
+      const startMenu = document.querySelector(".wrapper-menu");
+      startMenu.style.height = "30%";
+      startMenu.style.width = "10%";
+      const startButton = document.querySelector("button");
+      startButton.style.display = "none";
+      const mainMenu = document.querySelector(".main-menu");
+      mainMenu.style.display = "block";
+    };
+    const handleMainMenuButtonClick = () => {
+      const startMenu = document.querySelector(".wrapper-menu");
+      startMenu.style.height = "100%";
+      startMenu.style.width = "100%";
+      const startButton = document.querySelector("button");
+      startButton.style.display = "block";
+      const mainMenu = document.querySelector(".main-menu");
+      mainMenu.style.display = "none";
+    };
+  </script>
 </html>
