@@ -10,6 +10,7 @@ import { ghosts } from "./components/ghosts";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { WebGLMultisampleRenderTarget } from "three";
 import { graveTexture, graveTextureReflection } from "./projectTextures";
+import { CharacterControllerDemo } from "./components/character";
 
 // Debug
 const gui = new dat.GUI();
@@ -110,6 +111,9 @@ renderer.setClearColor("#262837");
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+const axesHelper = new THREE.AxesHelper(5);
+scene.add(axesHelper);
+
 /**
  * Animate
  */
@@ -137,6 +141,7 @@ const tick = () => {
         ghostGroups[i].localToWorld(displacement)
       );
     }
+    character._RAF(clock.getElapsedTime());
   }
 
   // Update controls
@@ -187,7 +192,8 @@ loader.load(
       scene.add(group);
       ghostGroups.push(group);
     }
-    tick();
+    const event = new CustomEvent("GhostLoaded");
+    document.dispatchEvent(event);
   },
   (xhr) => {
     console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
@@ -294,3 +300,9 @@ const generateGalaxy = () => {
 };
 
 generateGalaxy();
+
+let character;
+window.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("GhostLoaded", () => tick());
+  character = new CharacterControllerDemo(camera, scene);
+});
