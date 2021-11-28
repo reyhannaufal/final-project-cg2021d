@@ -52,6 +52,7 @@ export const graveTexture = textureLoader.load(
 export const graveTextureReflection = textureLoader.load(
   "/textures/tombstone/texturereflection.jpg"
 );
+export const ripTexture = textureLoader.load("/textures/tombstone/rip.jpg");
 
 grassColorTexture.repeat.set(8, 8);
 grassAmbientOcclusionTexture.repeat.set(8, 8);
