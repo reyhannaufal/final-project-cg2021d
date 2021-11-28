@@ -99,3 +99,16 @@ li {
   padding: 10px;
   font-size: 1.2rem;
 }
+
+.menu-header {
+  display: flex;
+  padding: 10px;
+}
+
+.close-icon {
+  display: none;
+}
+
+.unhide-menu {
+  display: none;
+}

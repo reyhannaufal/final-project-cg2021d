@@ -8,7 +8,24 @@
   <body>
     <div class="wrapper-menu">
       <div class="menu">
-        <h1 class="title">Haunted House</h1>
+        <div class="menu-header">
+          <h1 class="title">Haunted House</h1>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="close-icon"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            onclick="handleCloseIcon()"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </div>
         <p class="_secret">Psst...hover the title</p>
         <ul class="feature">
           <li>Tekan <code>Spasi</code> untuk membuat hantu berhenti.</li>
@@ -29,6 +46,9 @@
         <button onclick="handleMainMenuButtonClick()" class="main-menu">
           Main Menu
         </button>
+        <button class="unhide-menu" onclick="handleUnhideButtonClick()">
+          Unhide
+        </button>
       </div>
     </div>
     <canvas class="webgl"></canvas>
@@ -36,12 +56,15 @@
   <script>
     const handleStartButtonClick = () => {
       const startMenu = document.querySelector(".wrapper-menu");
-      startMenu.style.height = "30%";
-      startMenu.style.width = "10%";
+      startMenu.style.height = "500px";
+      startMenu.style.width = "300px";
       const startButton = document.querySelector("button");
       startButton.style.display = "none";
       const mainMenu = document.querySelector(".main-menu");
       mainMenu.style.display = "block";
+      const closeIcon = document.querySelector(".close-icon");
+      closeIcon.style.display = "block";
+      closeIcon.style.height = "40px";
     };
     const handleMainMenuButtonClick = () => {
       const startMenu = document.querySelector(".wrapper-menu");
@@ -51,6 +74,47 @@
       startButton.style.display = "block";
       const mainMenu = document.querySelector(".main-menu");
       mainMenu.style.display = "none";
+      const closeIcon = document.querySelector(".close-icon");
+    };
+    const handleCloseIcon = () => {
+      const feature = document.querySelector(".feature");
+      feature.style.display = "none";
+      const creatorTitle = document.querySelector(".creator-title");
+      creatorTitle.style.display = "none";
+      const creatorList = document.querySelector(".creator-list");
+      creatorList.style.display = "none";
+      const startMenu = document.querySelector(".wrapper-menu");
+      startMenu.style.height = "5px";
+      startMenu.style.width = "300px";
+      const title = document.querySelector(".title");
+      title.style.display = "none";
+      const closeIcon = document.querySelector(".close-icon");
+      closeIcon.style.display = "none";
+      const titleSecret = document.querySelector("._secret");
+      titleSecret.style.display = "none";
+      const mainMenu = document.querySelector(".main-menu");
+      mainMenu.style.display = "none";
+      const unhideMenu = document.querySelector(".unhide-menu");
+      unhideMenu.style.display = "block";
+    };
+    const handleUnhideButtonClick = () => {
+      const startMenu = document.querySelector(".wrapper-menu");
+      startMenu.style.height = "500px";
+      startMenu.style.width = "300px";
+      const feature = document.querySelector(".feature");
+      feature.style.display = "block";
+      const creatorTitle = document.querySelector(".creator-title");
+      creatorTitle.style.display = "block";
+      const creatorList = document.querySelector(".creator-list");
+      creatorList.style.display = "block";
+      const title = document.querySelector(".title");
+      title.style.display = "block";
+      const closeIcon = document.querySelector(".close-icon");
+      closeIcon.style.display = "block";
+      const unhideMenu = document.querySelector(".unhide-menu");
+      unhideMenu.style.display = "none";
+      const mainMenu = document.querySelector(".main-menu");
+      mainMenu.style.display = "block";
     };
   </script>
 </html>
