@@ -41,10 +41,10 @@
           <li>Reyhan Naufal Rahman</li>
         </ul>
         <button onclick="handleStartButtonClick()" class="start-menu">
-          Lesgo!
+          Start Haunted House
         </button>
         <button onclick="handleMainMenuButtonClick()" class="main-menu">
-          Main Menu
+          &lAarr; Main Menu
         </button>
         <button class="unhide-menu" onclick="handleUnhideButtonClick()">
           Unhide
@@ -62,9 +62,16 @@
       startButton.style.display = "none";
       const mainMenu = document.querySelector(".main-menu");
       mainMenu.style.display = "block";
+      mainMenu.style.backgroundColor = "black";
+      mainMenu.style.color = "white";
+      mainMenu.style.padding = "10px 40px";
+      mainMenu.style.borderRadius = "40px";
+      mainMenu.style.fontWeight = "700";
       const closeIcon = document.querySelector(".close-icon");
       closeIcon.style.display = "block";
-      closeIcon.style.height = "40px";
+      closeIcon.style.height = "30px";
+      const title = document.querySelector(".title");
+      title.style.fontSize = "2rem";
     };
     const handleMainMenuButtonClick = () => {
       const startMenu = document.querySelector(".wrapper-menu");
@@ -74,7 +81,10 @@
       startButton.style.display = "block";
       const mainMenu = document.querySelector(".main-menu");
       mainMenu.style.display = "none";
+      const title = document.querySelector(".title");
+      title.style.fontSize = "10rem";
       const closeIcon = document.querySelector(".close-icon");
+      closeIcon.style.display = "none";
     };
     const handleCloseIcon = () => {
       const feature = document.querySelector(".feature");
@@ -96,6 +106,10 @@
       mainMenu.style.display = "none";
       const unhideMenu = document.querySelector(".unhide-menu");
       unhideMenu.style.display = "block";
+      unhideMenu.style.backgroundColor = "black";
+      unhideMenu.style.color = "white";
+      unhideMenu.style.padding = "10px 40px";
+      unhideMenu.style.borderRadius = "40px";
     };
     const handleUnhideButtonClick = () => {
       const startMenu = document.querySelector(".wrapper-menu");
