@@ -14,6 +14,7 @@ import {
   graveTextureReflection,
   ripTexture,
 } from "./projectTextures";
+import { KeyDisplay } from "./utils";
 
 // Debug
 const gui = new dat.GUI();
@@ -106,6 +107,11 @@ scene.add(camera);
 // Controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
+controls.minDistance = 5;
+controls.maxDistance = 15;
+controls.enablePan = false;
+controls.maxPolarAngle = Math.PI / 2 - 0.05;
+controls.update();
 
 /**
  * Renderer
@@ -158,26 +164,36 @@ const tick = () => {
   window.requestAnimationFrame(tick);
 };
 
-document.addEventListener("keyup", (e) => {
-  switch (e.code) {
-    case "Space":
-      // Pause / resume ghost movement animation
-      if (e.code === "Space") {
-        animateGhost = !animateGhost;
-
-        if (clock.running) {
-          oldElapsedTime = clock.getElapsedTime();
-          clock.running = false;
-          return;
-        }
-        clock.start();
-        clock.elapsedTime = oldElapsedTime;
-      }
-      break;
-    case "KeyR":
-      clockwise = !clockwise;
-      break;
+// Control Keys
+const keysPressed = {};
+const keyDisplayQueue = new KeyDisplay();
+document.addEventListener("keydown", (event) => {
+  keyDisplayQueue.down(event.key);
+  if (event.shiftKey && characterControls) {
+    characterControls.switchRunToggle();
+  } else {
+    keysPressed[event.key.toLowerCase()] = true;
   }
+});
+document.addEventListener("keyup", (e) => {
+  if (e.code === "Space" || e.code === "KeyR") {
+    if (e.code === "KeyR") {
+      clockwise = !clockwise;
+      return;
+    }
+    animateGhost = !animateGhost;
+
+    if (clock.running) {
+      oldElapsedTime = clock.getElapsedTime();
+      clock.running = false;
+      return;
+    }
+    clock.start();
+    clock.elapsedTime = oldElapsedTime;
+    return;
+  }
+  keyDisplayQueue.up(e.key);
+  keysPressed[e.key.toLowerCase()] = false;
 });
 
 /**
