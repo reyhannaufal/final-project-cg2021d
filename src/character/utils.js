@@ -52,7 +52,7 @@ export class KeyDisplay {
 
   down(key) {
     if (this.map.get(key.toLowerCase())) {
-      this.map.get(key.toLowerCase()).style.color = "red";
+      this.map.get(key.toLowerCase()).style.color = "yellow";
     }
   }
 

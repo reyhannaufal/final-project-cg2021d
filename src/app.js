@@ -112,7 +112,7 @@ scene.add(camera);
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 controls.minDistance = 2.5;
-controls.maxDistance = 5;
+controls.maxDistance = 4;
 controls.enablePan = false;
 controls.maxPolarAngle = Math.PI / 2 - 0.05;
 controls.update();
@@ -156,11 +156,11 @@ const tick = () => {
         ghostGroups[i].localToWorld(displacement)
       );
     }
-  }
 
-  // Character
-  if (characterControls) {
-    characterControls.update(0.0125, keysPressed);
+    // Character
+    if (characterControls) {
+      characterControls.update(0.0125, keysPressed);
+    }
   }
 
   // Update controls
@@ -176,6 +176,7 @@ const tick = () => {
 // Control Keys
 const keysPressed = {};
 const keyDisplayQueue = new KeyDisplay();
+const pauseOverlay = document.getElementById("overlay");
 document.addEventListener("keydown", (event) => {
   keyDisplayQueue.down(event.key);
   if (event.shiftKey && characterControls) {
@@ -191,6 +192,11 @@ document.addEventListener("keyup", (e) => {
       return;
     }
     animateStuff = !animateStuff;
+    if (!animateStuff) {
+      pauseOverlay.style.display = "block";
+    } else {
+      pauseOverlay.style.display = "none";
+    }
 
     if (clock.running) {
       oldElapsedTime = clock.getElapsedTime();
