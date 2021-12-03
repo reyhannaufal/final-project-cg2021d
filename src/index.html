@@ -7,7 +7,7 @@
   </head>
   <body>
     <div id="overlay">
-      <div id="overlay-text">Paused</div>
+      <div id="overlay-text">Loading</div>
     </div>
 
     <div class="wrapper-menu">
@@ -76,6 +76,9 @@
       closeIcon.style.height = "30px";
       const title = document.querySelector(".title");
       title.style.fontSize = "2rem";
+
+      const event = new Event("start");
+      window.dispatchEvent(event);
     };
     const handleMainMenuButtonClick = () => {
       const startMenu = document.querySelector(".wrapper-menu");

@@ -176,7 +176,8 @@ const tick = () => {
 // Control Keys
 const keysPressed = {};
 const keyDisplayQueue = new KeyDisplay();
-const pauseOverlay = document.getElementById("overlay");
+const overlay = document.getElementById("overlay");
+const overlayText = document.getElementById("overlay-text");
 document.addEventListener("keydown", (event) => {
   keyDisplayQueue.down(event.key);
   if (event.shiftKey && characterControls) {
@@ -193,9 +194,9 @@ document.addEventListener("keyup", (e) => {
     }
     animateStuff = !animateStuff;
     if (!animateStuff) {
-      pauseOverlay.style.display = "block";
+      overlay.style.display = "block";
     } else {
-      pauseOverlay.style.display = "none";
+      overlay.style.display = "none";
     }
 
     if (clock.running) {
@@ -326,6 +327,11 @@ fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
     loadAnim("Run", a);
   });
 
+  animManager.onStart = () => {
+    overlay.style.display = "block";
+    overlayText.textContent = "Loading";
+  };
+
   animManager.onLoad = () => {
     characterControls = new CharacterControls(
       fbx,
@@ -335,6 +341,8 @@ fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
       camera,
       "Idle"
     );
+    overlay.style.display = "none";
+    overlayText.textContent = "Paused";
   };
 });
 
