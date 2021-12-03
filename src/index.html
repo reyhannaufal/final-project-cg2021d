@@ -86,7 +86,7 @@
        * */
       if (!isUserHaveStarted) {
         const event = new Event("start");
-        window.dispatchEvent(event);
+        document.dispatchEvent(event);
         localStorage.setItem("isUserHaveStarted", "true");
       }
     };

@@ -334,8 +334,6 @@ fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
       camera,
       "Idle"
     );
-    overlay.style.display = "none";
-    overlayText.textContent = "Paused";
   };
 });
 
@@ -344,9 +342,14 @@ fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
  * UNCOMMENT TO TEST
  * MAKE SURE TO COMMENT OUT BEFORE PUSHING
  */
-window.addEventListener("start", () => {
+document.addEventListener("start", () => {
   overlay.style.display = "block";
   overlayText.textContent = "Loading";
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  overlay.style.display = "none";
+  overlayText.textContent = "Paused";
 });
 
 // Star material
