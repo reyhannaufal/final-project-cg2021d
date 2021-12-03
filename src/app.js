@@ -441,7 +441,7 @@ const generateGalaxy = () => {
   });
 
   points = new THREE.Points(geometry, material);
-  points.position.y = 7.5;
+  points.position.y = 10;
   scene.add(points);
 };
 
