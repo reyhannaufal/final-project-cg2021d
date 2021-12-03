@@ -42,7 +42,7 @@ const graveMaterial = [
 
 for (let i = 0; i < 50; i++) {
   const angle = Math.random() * Math.PI * 2; // Random angle
-  const radius = 5 + Math.random() * 6; // Random radius
+  const radius = 7 + Math.random() * 6; // Random radius
   const x = Math.cos(angle) * radius; // Get the x position using cosinus
   const z = Math.sin(angle) * radius; // Get the z position using sinus
 
