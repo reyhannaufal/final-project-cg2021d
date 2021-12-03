@@ -89,6 +89,8 @@ window.addEventListener("resize", () => {
   // Update renderer
   renderer.setSize(sizes.width, sizes.height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  keyDisplayQueue.updatePosition();
 });
 
 /**
@@ -159,7 +161,7 @@ const tick = () => {
   // Character
   let mixerUpdateDelta = clock.getDelta();
   if (characterControls) {
-    characterControls.update(mixerUpdateDelta, keysPressed);
+    characterControls.update(0.0125, keysPressed);
   }
 
   // Update controls
@@ -283,6 +285,7 @@ loader.load(
  * Load character model with animations
  *
  */
+// Zombie Model
 let characterControls;
 const fbxLoader = new FBXLoader();
 fbxLoader.setPath("./models/zombie/");
@@ -295,14 +298,27 @@ fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
 
   scene.add(fbx);
 
-  const fbxAnimations = fbx.animations;
   const mixer = new THREE.AnimationMixer(fbx);
   const animationsMap = new Map();
-  fbxAnimations
-    .filter((a) => a.name != "TPose")
-    .forEach((a) => {
-      animationsMap.set(a.name, mixer.clipAction(a));
-    });
+
+  const loadAnim = (animName, anim) => {
+    const clip = anim.animations[0];
+    const action = mixer.clipAction(clip);
+
+    animationsMap.set(animName, action);
+  };
+
+  const animLoader = new FBXLoader();
+  animLoader.setPath("./models/zombie/");
+  animLoader.load("walk.fbx", (a) => {
+    loadAnim("Walk", a);
+  });
+  animLoader.load("run.fbx", (a) => {
+    loadAnim("Run", a);
+  });
+  animLoader.load("idle.fbx", (a) => {
+    loadAnim("Idle", a);
+  });
 
   characterControls = new CharacterControls(
     fbx,
@@ -313,6 +329,26 @@ fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
     "Idle"
   );
 });
+
+// Soldier Model
+// let characterControls;
+// new GLTFLoader().load('models/Soldier.glb', function (gltf) {
+//     const model = gltf.scene;
+//     model.position.set(2, 0.1, 2);
+//     model.traverse(function (object) {
+//         if (object.isMesh) object.castShadow = true;
+//     });
+//     scene.add(model);
+
+//     const gltfAnimations = gltf.animations;
+//     const mixer = new THREE.AnimationMixer(model);
+//     const animationsMap = new Map()
+//     gltfAnimations.filter(a => a.name != 'TPose').forEach((a) => {
+//         animationsMap.set(a.name, mixer.clipAction(a))
+//     })
+
+//     characterControls = new CharacterControls(model, mixer, animationsMap, controls, camera,  'Idle')
+// });
 
 // Star material
 const parameterGalaxy = {};
