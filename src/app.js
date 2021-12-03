@@ -351,7 +351,6 @@ fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
  * MAKE SURE TO UNCOMMENT OUT BEFORE PUSHING
  */
 document.addEventListener("start", () => {
-  console.log(finishedModels);
   if (finishedModels < modelAmounts) {
     overlay.style.display = "block";
     overlayText.textContent = "Loading...";
