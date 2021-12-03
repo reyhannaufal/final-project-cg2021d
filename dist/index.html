@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Final Project - CG2021 (D)</title>
+    <script defer="defer" src="bundle.699e4502c0e330456ef4.js"></script>
+    <link href="main.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="wrapper-menu">
+      <div class="menu">
+        <div class="menu-header">
+          <h1 class="title">Haunted House</h1>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="close-icon"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            onclick="handleCloseIcon()"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </div>
+        <p class="_secret">Psst...hover the title</p>
+        <ul class="feature">
+          <li>Tekan <code>Spasi</code> untuk membuat hantu berhenti.</li>
+          <li>Tekan <code>R</code> untuk membuat hantu berubah arah.</li>
+          <li>
+            Gunakan <code>Mouse</code> anda untuk melihat dunia haunted house.
+          </li>
+        </ul>
+        <h2 class="creator-title">Creators</h2>
+        <ul class="creator-list">
+          <li>Thomax Felix Brilliant</li>
+          <li>William Handi Wijaya</li>
+          <li>Reyhan Naufal Rahman</li>
+        </ul>
+        <button onclick="handleStartButtonClick()" class="start-menu">
+          Start Haunted House
+        </button>
+        <button onclick="handleMainMenuButtonClick()" class="main-menu">
+          &lAarr; Main Menu
+        </button>
+        <button class="unhide-menu" onclick="handleUnhideButtonClick()">
+          Unhide
+        </button>
+      </div>
+    </div>
+    <canvas class="webgl"></canvas>
+  </body>
+  <script>
+    const handleStartButtonClick = () => {
+        const e = document.querySelector(".wrapper-menu");
+        (e.style.height = "500px"), (e.style.width = "300px");
+        document.querySelector("button").style.display = "none";
+        const t = document.querySelector(".main-menu");
+        (t.style.display = "block"),
+          (t.style.backgroundColor = "black"),
+          (t.style.color = "white"),
+          (t.style.padding = "10px 40px"),
+          (t.style.borderRadius = "40px"),
+          (t.style.fontWeight = "700");
+        const l = document.querySelector(".close-icon");
+        (l.style.display = "block"), (l.style.height = "30px");
+        document.querySelector(".title").style.fontSize = "2rem";
+      },
+      handleMainMenuButtonClick = () => {
+        const e = document.querySelector(".wrapper-menu");
+        (e.style.height = "100%"), (e.style.width = "100%");
+        document.querySelector("button").style.display = "block";
+        document.querySelector(".main-menu").style.display = "none";
+        document.querySelector(".title").style.fontSize = "10rem";
+        document.querySelector(".close-icon").style.display = "none";
+      },
+      handleCloseIcon = () => {
+        document.querySelector(".feature").style.display = "none";
+        document.querySelector(".creator-title").style.display = "none";
+        document.querySelector(".creator-list").style.display = "none";
+        const e = document.querySelector(".wrapper-menu");
+        (e.style.height = "5px"), (e.style.width = "300px");
+        document.querySelector(".title").style.display = "none";
+        document.querySelector(".close-icon").style.display = "none";
+        document.querySelector("._secret").style.display = "none";
+        document.querySelector(".main-menu").style.display = "none";
+        const t = document.querySelector(".unhide-menu");
+        (t.style.display = "block"),
+          (t.style.backgroundColor = "black"),
+          (t.style.color = "white"),
+          (t.style.padding = "10px 40px"),
+          (t.style.borderRadius = "40px");
+      },
+      handleUnhideButtonClick = () => {
+        const e = document.querySelector(".wrapper-menu");
+        (e.style.height = "500px"), (e.style.width = "300px");
+        document.querySelector(".feature").style.display = "block";
+        document.querySelector(".creator-title").style.display = "block";
+        document.querySelector(".creator-list").style.display = "block";
+        document.querySelector(".title").style.display = "block";
+        document.querySelector(".close-icon").style.display = "block";
+        document.querySelector(".unhide-menu").style.display = "none";
+        document.querySelector(".main-menu").style.display = "block";
+      };
+  </script>
+</html>

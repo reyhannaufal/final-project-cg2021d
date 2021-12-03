@@ -14,7 +14,9 @@ import {
   graveTextureReflection,
   ripTexture,
 } from "./projectTextures";
-import { KeyDisplay } from "./utils";
+import { KeyDisplay } from "./character/utils";
+import { CharacterControls } from "./character/characterControls";
+import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 
 // Debug
 const gui = new dat.GUI();
@@ -108,7 +110,7 @@ scene.add(camera);
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 controls.minDistance = 5;
-controls.maxDistance = 15;
+controls.maxDistance = 7.5;
 controls.enablePan = false;
 controls.maxPolarAngle = Math.PI / 2 - 0.05;
 controls.update();
@@ -129,13 +131,13 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
  * Animate
  */
 const clock = new THREE.Clock();
-let animateGhost = true;
+let animateStuff = true;
 let oldElapsedTime = 0;
 let clockwise = true;
 
 const tick = () => {
   // Ghosts
-  if (animateGhost) {
+  if (animateStuff) {
     const elapsedTime = clock.getElapsedTime() * (clockwise ? 1 : -1);
 
     for (let i = 0; i < ghosts.length; i++) {
@@ -152,6 +154,12 @@ const tick = () => {
         ghostGroups[i].localToWorld(displacement)
       );
     }
+  }
+
+  // Character
+  let mixerUpdateDelta = clock.getDelta();
+  if (characterControls) {
+    characterControls.update(mixerUpdateDelta, keysPressed);
   }
 
   // Update controls
@@ -181,7 +189,7 @@ document.addEventListener("keyup", (e) => {
       clockwise = !clockwise;
       return;
     }
-    animateGhost = !animateGhost;
+    animateStuff = !animateStuff;
 
     if (clock.running) {
       oldElapsedTime = clock.getElapsedTime();
@@ -271,6 +279,42 @@ loader.load(
   }
 );
 
+/**
+ * Load character model with animations
+ *
+ */
+let characterControls;
+const fbxLoader = new FBXLoader();
+fbxLoader.setPath("./models/zombie/");
+fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
+  fbx.scale.setScalar(0.005);
+  fbx.position.set(2, 0.1, 2);
+  fbx.traverse((obj) => {
+    if (obj.isMMesh) obj.castShadow = true;
+  });
+
+  scene.add(fbx);
+
+  const fbxAnimations = fbx.animations;
+  const mixer = new THREE.AnimationMixer(fbx);
+  const animationsMap = new Map();
+  fbxAnimations
+    .filter((a) => a.name != "TPose")
+    .forEach((a) => {
+      animationsMap.set(a.name, mixer.clipAction(a));
+    });
+
+  characterControls = new CharacterControls(
+    fbx,
+    mixer,
+    animationsMap,
+    controls,
+    camera,
+    "Idle"
+  );
+});
+
+// Star material
 const parameterGalaxy = {};
 parameterGalaxy.count = 400;
 parameterGalaxy.size = 0.075;
@@ -286,7 +330,6 @@ let geometry = null;
 let material = null;
 let points = null;
 
-// Star material
 const generateGalaxy = () => {
   if (points !== null) {
     geometry.dispose();
