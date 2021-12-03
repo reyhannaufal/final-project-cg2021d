@@ -85,7 +85,7 @@ export class CharacterControls {
       // rotate model
       this.rotateQuarternion.setFromAxisAngle(
         this.rotateAngle,
-        angleYCameraDirection + directionOffset
+        angleYCameraDirection + directionOffset + Math.PI
       );
       this.model.quaternion.rotateTowards(this.rotateQuarternion, 0.2);
 

@@ -111,8 +111,8 @@ scene.add(camera);
 // Controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
-controls.minDistance = 5;
-controls.maxDistance = 7.5;
+controls.minDistance = 2.5;
+controls.maxDistance = 5;
 controls.enablePan = false;
 controls.maxPolarAngle = Math.PI / 2 - 0.05;
 controls.update();
@@ -159,7 +159,6 @@ const tick = () => {
   }
 
   // Character
-  let mixerUpdateDelta = clock.getDelta();
   if (characterControls) {
     characterControls.update(0.0125, keysPressed);
   }
@@ -290,10 +289,10 @@ let characterControls;
 const fbxLoader = new FBXLoader();
 fbxLoader.setPath("./models/zombie/");
 fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
-  fbx.scale.setScalar(0.005);
-  fbx.position.set(2, 0.1, 2);
+  fbx.scale.setScalar(0.0075);
+  fbx.position.set(2, 0.08, 2);
   fbx.traverse((obj) => {
-    if (obj.isMMesh) obj.castShadow = true;
+    obj.castShadow = true;
   });
 
   scene.add(fbx);
@@ -308,47 +307,30 @@ fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
     animationsMap.set(animName, action);
   };
 
-  const animLoader = new FBXLoader();
+  const animManager = new THREE.LoadingManager();
+  const animLoader = new FBXLoader(animManager);
   animLoader.setPath("./models/zombie/");
+  animLoader.load("idle.fbx", (a) => {
+    loadAnim("Idle", a);
+  });
   animLoader.load("walk.fbx", (a) => {
     loadAnim("Walk", a);
   });
   animLoader.load("run.fbx", (a) => {
     loadAnim("Run", a);
   });
-  animLoader.load("idle.fbx", (a) => {
-    loadAnim("Idle", a);
-  });
 
-  characterControls = new CharacterControls(
-    fbx,
-    mixer,
-    animationsMap,
-    controls,
-    camera,
-    "Idle"
-  );
+  animManager.onLoad = () => {
+    characterControls = new CharacterControls(
+      fbx,
+      mixer,
+      animationsMap,
+      controls,
+      camera,
+      "Idle"
+    );
+  };
 });
-
-// Soldier Model
-// let characterControls;
-// new GLTFLoader().load('models/Soldier.glb', function (gltf) {
-//     const model = gltf.scene;
-//     model.position.set(2, 0.1, 2);
-//     model.traverse(function (object) {
-//         if (object.isMesh) object.castShadow = true;
-//     });
-//     scene.add(model);
-
-//     const gltfAnimations = gltf.animations;
-//     const mixer = new THREE.AnimationMixer(model);
-//     const animationsMap = new Map()
-//     gltfAnimations.filter(a => a.name != 'TPose').forEach((a) => {
-//         animationsMap.set(a.name, mixer.clipAction(a))
-//     })
-
-//     characterControls = new CharacterControls(model, mixer, animationsMap, controls, camera,  'Idle')
-// });
 
 // Star material
 const parameterGalaxy = {};
