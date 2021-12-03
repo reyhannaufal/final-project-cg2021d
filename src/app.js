@@ -248,6 +248,8 @@ manager.onError = function (url) {
 
 let finishedModels = 0;
 const loadFinishEvent = new Event("loadFinish");
+const modelAmounts = 3;
+
 const loader = new GLTFLoader();
 let ghostGroups = [];
 loader.load(
@@ -349,13 +351,15 @@ fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
  * MAKE SURE TO UNCOMMENT OUT BEFORE PUSHING
  */
 document.addEventListener("start", () => {
-  overlay.style.display = "block";
-  overlayText.textContent = "Loading...";
+  if (finishedModels < modelAmounts) {
+    overlay.style.display = "block";
+    overlayText.textContent = "Loading...";
+  }
 });
 
 document.addEventListener("loadFinish", function () {
   finishedModels++;
-  if (finishedModels === 3) {
+  if (finishedModels >= modelAmounts) {
     overlay.style.display = "none";
     overlayText.textContent = "Paused";
   }

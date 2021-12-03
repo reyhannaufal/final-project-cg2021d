@@ -58,9 +58,6 @@
     <canvas class="webgl"></canvas>
   </body>
   <script>
-    // Flag user if they are already playing
-    const isUserHaveStarted = localStorage.getItem("isUserHaveStarted");
-
     const handleStartButtonClick = () => {
       const startMenu = document.querySelector(".wrapper-menu");
       startMenu.style.height = "500px";
@@ -80,15 +77,8 @@
       const title = document.querySelector(".title");
       title.style.fontSize = "2rem";
 
-      /**
-       * @description
-       * Start load all the assets
-       * */
-      if (!isUserHaveStarted) {
-        const event = new Event("start");
-        document.dispatchEvent(event);
-        localStorage.setItem("isUserHaveStarted", "true");
-      }
+      const event = new Event("start");
+      window.dispatchEvent(event);
     };
 
     const handleMainMenuButtonClick = () => {
