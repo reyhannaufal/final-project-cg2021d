@@ -6,6 +6,10 @@
     <title>Final Project - CG2021 (D)</title>
   </head>
   <body>
+    <div id="overlay">
+      <div id="overlay-text">Loading</div>
+    </div>
+
     <div class="wrapper-menu">
       <div class="menu">
         <div class="menu-header">
@@ -72,7 +76,11 @@
       closeIcon.style.height = "30px";
       const title = document.querySelector(".title");
       title.style.fontSize = "2rem";
+
+      const event = new Event("start");
+      document.dispatchEvent(event);
     };
+
     const handleMainMenuButtonClick = () => {
       const startMenu = document.querySelector(".wrapper-menu");
       startMenu.style.height = "100%";
@@ -86,6 +94,7 @@
       const closeIcon = document.querySelector(".close-icon");
       closeIcon.style.display = "none";
     };
+
     const handleCloseIcon = () => {
       const feature = document.querySelector(".feature");
       feature.style.display = "none";
@@ -111,6 +120,7 @@
       unhideMenu.style.padding = "10px 40px";
       unhideMenu.style.borderRadius = "40px";
     };
+
     const handleUnhideButtonClick = () => {
       const startMenu = document.querySelector(".wrapper-menu");
       startMenu.style.height = "500px";

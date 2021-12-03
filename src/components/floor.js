@@ -6,7 +6,7 @@ import {
   grassRoughnessTexture,
 } from "../projectTextures";
 export const floor = new THREE.Mesh(
-  new THREE.PlaneBufferGeometry(20, 20),
+  new THREE.PlaneBufferGeometry(60, 60),
   new THREE.MeshStandardMaterial({
     map: grassColorTexture,
     aoMap: grassAmbientOcclusionTexture,

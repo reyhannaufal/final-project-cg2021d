@@ -14,6 +14,9 @@ import {
   graveTextureReflection,
   ripTexture,
 } from "./projectTextures";
+import { KeyDisplay } from "./character/utils";
+import { CharacterControls } from "./character/characterControls";
+import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 
 // Debug
 const gui = new dat.GUI();
@@ -23,8 +26,6 @@ const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
 
 /* Components ------------------------------------------------------------- */
-// house(scene);
-// twoStoryHouse(scene);
 
 // Graves material & logic
 const graves = new THREE.Group();
@@ -41,7 +42,7 @@ const graveMaterial = [
 
 for (let i = 0; i < 50; i++) {
   const angle = Math.random() * Math.PI * 2; // Random angle
-  const radius = 3 + Math.random() * 6; // Random radius
+  const radius = 7 + Math.random() * 6; // Random radius
   const x = Math.cos(angle) * radius; // Get the x position using cosinus
   const z = Math.sin(angle) * radius; // Get the z position using sinus
 
@@ -86,6 +87,8 @@ window.addEventListener("resize", () => {
   // Update renderer
   renderer.setSize(sizes.width, sizes.height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  keyDisplayQueue.updatePosition();
 });
 
 /**
@@ -106,6 +109,11 @@ scene.add(camera);
 // Controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
+controls.minDistance = 1.25;
+controls.maxDistance = 3;
+controls.enablePan = false;
+controls.maxPolarAngle = Math.PI / 2 - 0.05;
+controls.update();
 
 /**
  * Renderer
@@ -123,13 +131,13 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
  * Animate
  */
 const clock = new THREE.Clock();
-let animateGhost = true;
+let animateStuff = true;
 let oldElapsedTime = 0;
 let clockwise = true;
 
 const tick = () => {
   // Ghosts
-  if (animateGhost) {
+  if (animateStuff) {
     const elapsedTime = clock.getElapsedTime() * (clockwise ? 1 : -1);
 
     for (let i = 0; i < ghosts.length; i++) {
@@ -146,6 +154,11 @@ const tick = () => {
         ghostGroups[i].localToWorld(displacement)
       );
     }
+
+    // Character
+    if (characterControls) {
+      characterControls.update(0.0125, keysPressed);
+    }
   }
 
   // Update controls
@@ -158,26 +171,43 @@ const tick = () => {
   window.requestAnimationFrame(tick);
 };
 
-document.addEventListener("keyup", (e) => {
-  switch (e.code) {
-    case "Space":
-      // Pause / resume ghost movement animation
-      if (e.code === "Space") {
-        animateGhost = !animateGhost;
-
-        if (clock.running) {
-          oldElapsedTime = clock.getElapsedTime();
-          clock.running = false;
-          return;
-        }
-        clock.start();
-        clock.elapsedTime = oldElapsedTime;
-      }
-      break;
-    case "KeyR":
-      clockwise = !clockwise;
-      break;
+// Control Keys
+const keysPressed = {};
+const keyDisplayQueue = new KeyDisplay();
+const overlay = document.getElementById("overlay");
+const overlayText = document.getElementById("overlay-text");
+document.addEventListener("keydown", (event) => {
+  keyDisplayQueue.down(event.key);
+  if (event.shiftKey && characterControls) {
+    characterControls.switchRunToggle();
+  } else {
+    keysPressed[event.key.toLowerCase()] = true;
   }
+});
+document.addEventListener("keyup", (e) => {
+  if (e.code === "Space" || e.code === "KeyR") {
+    if (e.code === "KeyR") {
+      clockwise = !clockwise;
+      return;
+    }
+    animateStuff = !animateStuff;
+    if (!animateStuff) {
+      overlay.style.display = "block";
+    } else {
+      overlay.style.display = "none";
+    }
+
+    if (clock.running) {
+      oldElapsedTime = clock.getElapsedTime();
+      clock.running = false;
+      return;
+    }
+    clock.start();
+    clock.elapsedTime = oldElapsedTime;
+    return;
+  }
+  keyDisplayQueue.up(e.key);
+  keysPressed[e.key.toLowerCase()] = false;
 });
 
 /**
@@ -216,6 +246,10 @@ manager.onError = function (url) {
   console.log("There was an error loading " + url);
 };
 
+let finishedModels = 0;
+const loadFinishEvent = new Event("loadFinish");
+const modelAmounts = 3;
+
 const loader = new GLTFLoader();
 let ghostGroups = [];
 loader.load(
@@ -233,6 +267,7 @@ loader.load(
   },
   (xhr) => {
     console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+    document.dispatchEvent(loadFinishEvent);
   },
   (error) => {
     console.log("An error happened");
@@ -246,15 +281,91 @@ loader.load(
     const model = gltf.scene;
     model.position;
     model.position.set(0, 0.1, 0);
-    model.scale.set(0.01, 0.01, 0.01);
+    model.scale.set(0.02, 0.02, 0.01);
     scene.add(model);
   },
-  undefined,
+  function (xhr) {
+    document.dispatchEvent(loadFinishEvent);
+  },
   function (error) {
     console.error(error);
   }
 );
 
+/**
+ * Load character model with animations
+ *
+ */
+// Zombie Model
+let characterControls;
+const fbxLoader = new FBXLoader();
+fbxLoader.setPath("./models/zombie/");
+fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
+  fbx.scale.setScalar(0.0075);
+  fbx.position.set(2, 0.08, 2);
+  fbx.traverse((obj) => {
+    obj.castShadow = true;
+  });
+
+  scene.add(fbx);
+
+  const mixer = new THREE.AnimationMixer(fbx);
+  const animationsMap = new Map();
+
+  const loadAnim = (animName, anim) => {
+    const clip = anim.animations[0];
+    const action = mixer.clipAction(clip);
+
+    animationsMap.set(animName, action);
+  };
+
+  const animManager = new THREE.LoadingManager();
+  const animLoader = new FBXLoader(animManager);
+  animLoader.setPath("./models/zombie/");
+  animLoader.load("idle.fbx", (a) => {
+    loadAnim("Idle", a);
+  });
+  animLoader.load("walk.fbx", (a) => {
+    loadAnim("Walk", a);
+  });
+  animLoader.load("run.fbx", (a) => {
+    loadAnim("Run", a);
+  });
+
+  animManager.onLoad = () => {
+    characterControls = new CharacterControls(
+      fbx,
+      mixer,
+      animationsMap,
+      controls,
+      camera,
+      "Idle"
+    );
+    document.dispatchEvent(loadFinishEvent);
+  };
+});
+
+/**
+ * DO NOT TOUCH THIS
+ * COMMENT TO TEST
+ * MAKE SURE TO UNCOMMENT OUT BEFORE PUSHING
+ */
+document.addEventListener("start", () => {
+  if (finishedModels < modelAmounts) {
+    overlay.style.display = "block";
+    overlayText.textContent = "Loading...";
+  }
+});
+
+document.addEventListener("loadFinish", function () {
+  finishedModels++;
+  if (finishedModels >= modelAmounts) {
+    overlay.style.display = "none";
+    overlayText.textContent = "Paused";
+  }
+});
+
+// Star material
 const parameterGalaxy = {};
 parameterGalaxy.count = 400;
 parameterGalaxy.size = 0.075;
@@ -270,7 +381,6 @@ let geometry = null;
 let material = null;
 let points = null;
 
-// Star material
 const generateGalaxy = () => {
   if (points !== null) {
     geometry.dispose();
@@ -331,7 +441,7 @@ const generateGalaxy = () => {
   });
 
   points = new THREE.Points(geometry, material);
-  points.position.y = 7.5;
+  points.position.y = 10;
   scene.add(points);
 };
 
