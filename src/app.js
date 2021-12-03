@@ -327,11 +327,6 @@ fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
     loadAnim("Run", a);
   });
 
-  animManager.onStart = () => {
-    overlay.style.display = "block";
-    overlayText.textContent = "Loading";
-  };
-
   animManager.onLoad = () => {
     characterControls = new CharacterControls(
       fbx,
@@ -344,6 +339,11 @@ fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
     overlay.style.display = "none";
     overlayText.textContent = "Paused";
   };
+});
+
+window.addEventListener("start", () => {
+  overlay.style.display = "block";
+  overlayText.textContent = "Loading";
 });
 
 // Star material
