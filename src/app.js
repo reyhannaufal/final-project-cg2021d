@@ -339,6 +339,11 @@ fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
   };
 });
 
+/**
+ * DO NOT TOUCH THIS
+ * UNCOMMENT TO TEST
+ * MAKE SURE TO COMMENT OUT BEFORE PUSHING
+ */
 window.addEventListener("start", () => {
   overlay.style.display = "block";
   overlayText.textContent = "Loading";
