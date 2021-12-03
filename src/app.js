@@ -26,8 +26,6 @@ const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
 
 /* Components ------------------------------------------------------------- */
-// house(scene);
-// twoStoryHouse(scene);
 
 // Graves material & logic
 const graves = new THREE.Group();
@@ -44,7 +42,7 @@ const graveMaterial = [
 
 for (let i = 0; i < 50; i++) {
   const angle = Math.random() * Math.PI * 2; // Random angle
-  const radius = 3 + Math.random() * 6; // Random radius
+  const radius = 5 + Math.random() * 6; // Random radius
   const x = Math.cos(angle) * radius; // Get the x position using cosinus
   const z = Math.sin(angle) * radius; // Get the z position using sinus
 
@@ -278,7 +276,7 @@ loader.load(
     const model = gltf.scene;
     model.position;
     model.position.set(0, 0.1, 0);
-    model.scale.set(0.01, 0.01, 0.01);
+    model.scale.set(0.02, 0.02, 0.01);
     scene.add(model);
   },
   undefined,
