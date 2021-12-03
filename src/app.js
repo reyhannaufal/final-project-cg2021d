@@ -246,6 +246,8 @@ manager.onError = function (url) {
   console.log("There was an error loading " + url);
 };
 
+let finishedModels = 0;
+const loadFinishEvent = new Event("loadFinish");
 const loader = new GLTFLoader();
 let ghostGroups = [];
 loader.load(
@@ -263,6 +265,7 @@ loader.load(
   },
   (xhr) => {
     console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+    document.dispatchEvent(loadFinishEvent);
   },
   (error) => {
     console.log("An error happened");
@@ -279,7 +282,9 @@ loader.load(
     model.scale.set(0.02, 0.02, 0.01);
     scene.add(model);
   },
-  undefined,
+  function (xhr) {
+    document.dispatchEvent(loadFinishEvent);
+  },
   function (error) {
     console.error(error);
   }
@@ -334,6 +339,7 @@ fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
       camera,
       "Idle"
     );
+    document.dispatchEvent(loadFinishEvent);
   };
 });
 
@@ -344,12 +350,15 @@ fbxLoader.load("mremireh_o_desbiens.fbx", (fbx) => {
  */
 document.addEventListener("start", () => {
   overlay.style.display = "block";
-  overlayText.textContent = "Loading";
+  overlayText.textContent = "Loading...";
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  overlay.style.display = "none";
-  overlayText.textContent = "Paused";
+document.addEventListener("loadFinish", function () {
+  finishedModels++;
+  if (finishedModels === 3) {
+    overlay.style.display = "none";
+    overlayText.textContent = "Paused";
+  }
 });
 
 // Star material
