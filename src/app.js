@@ -19,7 +19,7 @@ import { CharacterControls } from "./character/characterControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 
 // Debug
-const gui = new dat.GUI();
+// const gui = new dat.GUI();
 
 const canvas = document.querySelector("canvas.webgl");
 
