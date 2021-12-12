@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { A, D, DIRECTIONS, S, W } from "./utils";
+import { A, D, DIRECTIONS, S, W } from "./characterUtils";
 
 export class CharacterControls {
   model;
