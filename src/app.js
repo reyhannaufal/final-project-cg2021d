@@ -14,7 +14,7 @@ import {
   graveTextureReflection,
   ripTexture,
 } from "./projectTextures";
-import { KeyDisplay } from "./character/utils";
+import { KeyDisplay } from "./character/characterUtils";
 import { CharacterControls } from "./character/characterControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 
@@ -273,6 +273,35 @@ loader.load(
     console.log("An error happened");
     console.log(error);
   }
+);
+
+loader.load(
+  "/models/street_lamp/scene.gltf",
+  (gltf) => {
+    const model = gltf.scene;
+    for (let i = 0; i < 10; i++) {
+      const angle = Math.random() * Math.PI * 2; // Random angle
+      const radius = 7 + Math.random() * 6; // Random radius
+      const clone = model.clone();
+      const x = Math.cos(angle) * radius; // Get the x position using cosinus
+      const z = Math.sin(angle) * radius; // Get the z position using sinus
+      clone.position.set(x + 5, -0.5, z);
+      scene.add(clone);
+      //adding light to model
+      const light = new THREE.PointLight(0xffffff, 0.2, 100);
+      light.position.set(
+        clone.position.x,
+        clone.position.y + 3,
+        clone.position.z
+      );
+      scene.add(light);
+      //light helper
+      const helper = new THREE.PointLightHelper(light, 0.1);
+      scene.add(helper);
+    }
+  },
+  (xhr) => console.log((xhr.loaded / xhr.total) * 100 + "% loaded"),
+  (error) => console.log("An error happened")
 );
 
 loader.load(
