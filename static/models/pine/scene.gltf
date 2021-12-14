@@ -1,0 +1,409 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 768,
+      "max": [
+        5.1772298812866211,
+        1.6410200595855713,
+        1.4498800039291382
+      ],
+      "min": [
+        0.25183001160621643,
+        -1.5518300533294678,
+        -1.6332000494003296
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 9216,
+      "componentType": 5126,
+      "count": 768,
+      "max": [
+        0.92454624176025391,
+        0.99636989831924438,
+        1
+      ],
+      "min": [
+        -0.91150903701782227,
+        -0.99976962804794312,
+        -0.99644595384597778
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 768,
+      "max": [
+        0.038666959851980209,
+        1,
+        0.99990582466125488,
+        1
+      ],
+      "min": [
+        -0.021326303482055664,
+        -0.89005351066589355,
+        -0.9956059455871582,
+        1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 768,
+      "max": [
+        1.0015100240707397,
+        1
+      ],
+      "min": [
+        0,
+        0
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 1152,
+      "max": [
+        767
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 18432,
+      "componentType": 5126,
+      "count": 135,
+      "max": [
+        5.2189202308654785,
+        0.13127000629901886,
+        0.11283999681472778
+      ],
+      "min": [
+        -0.0033599999733269215,
+        -0.12392999976873398,
+        -0.13000999391078949
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 20052,
+      "componentType": 5126,
+      "count": 135,
+      "max": [
+        0.19231982529163361,
+        0.99245953559875488,
+        0.99918419122695923
+      ],
+      "min": [
+        -0.99998724460601807,
+        -0.99380892515182495,
+        -0.97884613275527954
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 12288,
+      "componentType": 5126,
+      "count": 135,
+      "max": [
+        0.99678945541381836,
+        0.99943023920059204,
+        0.99801927804946899,
+        1
+      ],
+      "min": [
+        -0.97560185194015503,
+        -0.11884087324142456,
+        -0.99549907445907593,
+        -1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 6144,
+      "componentType": 5126,
+      "count": 135,
+      "max": [
+        0.96806997060775757,
+        1
+      ],
+      "min": [
+        0.0003800000122282654,
+        0
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 4608,
+      "componentType": 5125,
+      "count": 147,
+      "max": [
+        134
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "rhcreations (https://sketchfab.com/rhcreations)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/pine-tree-2-4fcec3506f964a3e82741b9c2b7fc3f8",
+      "title": "Pine Tree 2"
+    },
+    "generator": "Sketchfab-7.27.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 5196,
+      "byteOffset": 0,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 7224,
+      "byteOffset": 5196,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 21672,
+      "byteOffset": 12420,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 14448,
+      "byteOffset": 34092,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 48540,
+      "uri": "scene.bin"
+    }
+  ],
+  "extensionsRequired": [
+    "KHR_materials_pbrSpecularGlossiness"
+  ],
+  "extensionsUsed": [
+    "KHR_materials_pbrSpecularGlossiness"
+  ],
+  "images": [
+    {
+      "uri": "textures/Pine_Needles_diffuse.png"
+    },
+    {
+      "uri": "textures/Pine_Needles_specularGlossiness.png"
+    },
+    {
+      "uri": "textures/Bark_Material_diffuse.jpeg"
+    }
+  ],
+  "materials": [
+    {
+      "alphaCutoff": 0.72122713409999994,
+      "alphaMode": "MASK",
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_pbrSpecularGlossiness": {
+          "diffuseFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "diffuseTexture": {
+            "index": 0,
+            "texCoord": 0
+          },
+          "glossinessFactor": 1,
+          "specularFactor": [
+            0,
+            0,
+            0
+          ],
+          "specularGlossinessTexture": {
+            "index": 1,
+            "texCoord": 0
+          }
+        }
+      },
+      "name": "Pine_Needles"
+    },
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_pbrSpecularGlossiness": {
+          "diffuseFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "diffuseTexture": {
+            "index": 2,
+            "texCoord": 0
+          },
+          "glossinessFactor": 1,
+          "specularFactor": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "name": "Bark_Material"
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Pine Tree 2_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 4,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Pine Tree 2_1",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 6,
+            "POSITION": 5,
+            "TANGENT": 7,
+            "TEXCOORD_0": 8
+          },
+          "indices": 9,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "name": "RootNode (gltf orientation matrix)",
+      "rotation": [
+        -0.70710678118654746,
+        -0,
+        -0,
+        0.70710678118654757
+      ]
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "RootNode (model correction matrix)"
+    },
+    {
+      "children": [
+        3
+      ],
+      "name": "Root"
+    },
+    {
+      "children": [
+        4,
+        5
+      ],
+      "matrix": [
+        -0.045620000000000015,
+        0.028430000000000004,
+        2.5037000000000003,
+        0,
+        1.9977699999999998,
+        3.2055000000000002,
+        0,
+        0,
+        -3.2050100000000001,
+        1.9974699999999999,
+        -0.081080000000000013,
+        0,
+        -0,
+        -0,
+        0,
+        1
+      ],
+      "name": "Pine Tree 2"
+    },
+    {
+      "mesh": 0,
+      "name": "Pine Tree 2_0"
+    },
+    {
+      "mesh": 1,
+      "name": "Pine Tree 2_1"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "OSG_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    }
+  ]
+}
+

@@ -304,6 +304,31 @@ loader.load(
   (error) => console.log("An error happened")
 );
 
+//pine model
+loader.load(
+  "/models/pine/scene.gltf",
+  (gltf) => {
+    const model = gltf.scene;
+    model.scale.set(0.5, 0.5, 0.5);
+
+    model.traverse((obj) => {
+      obj.castShadow = true;
+    });
+
+    for (let i = 0; i < 25; i++) {
+      const angle = Math.random() * Math.PI * 2; // Random angle
+      const radius = 25 + Math.random() * 6; // Random radius
+      const clone = model.clone();
+      const x = Math.cos(angle) * radius; // Get the x position using cosinus
+      const z = Math.sin(angle) * radius; // Get the z position using sinus
+      clone.position.set(x, -0.5, z);
+      scene.add(clone);
+    }
+  },
+  (xhr) => console.log((xhr.loaded / xhr.total) * 100 + "% loaded"),
+  (error) => console.log("An error happened")
+);
+
 loader.load(
   "models/house/scene.gltf",
   function (gltf) {
