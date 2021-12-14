@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Final Project - CG2021 (D)</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://img.icons8.com/external-flat-icons-maxicons/85/000000/external-halloween-season-flat-icons-maxicons.png"
+    />
   </head>
   <body>
     <div id="overlay">
@@ -13,6 +18,23 @@
     <div class="wrapper-menu">
       <div class="menu">
         <div class="menu-header">
+          <div class="spider">
+            <div class="spiderweb"></div>
+            <div class="body">
+              <div class="eye left"></div>
+              <div class="eye right"></div>
+            </div>
+            <div class="legs left">
+              <div class="leg"></div>
+              <div class="leg"></div>
+              <div class="leg"></div>
+            </div>
+            <div class="legs right">
+              <div class="leg"></div>
+              <div class="leg"></div>
+              <div class="leg"></div>
+            </div>
+          </div>
           <h1 class="title">Haunted House</h1>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -21,6 +43,7 @@
             viewBox="0 0 24 24"
             stroke="currentColor"
             onclick="handleCloseIcon()"
+            style="margin-top: 5px; margin-left: 5px"
           >
             <path
               stroke-linecap="round"
@@ -30,7 +53,7 @@
             />
           </svg>
         </div>
-        <audio autoplay>
+        <audio loop autoplay>
           <source src="/music/pvz-theme.mp3" type="audio/ogg" />
           Your browser does not support the audio element.
         </audio>
@@ -80,6 +103,8 @@
       closeIcon.style.height = "30px";
       const title = document.querySelector(".title");
       title.style.fontSize = "2rem";
+      const spider = document.querySelector(".spider");
+      spider.style.display = "none";
 
       const event = new Event("start");
       document.dispatchEvent(event);
@@ -97,6 +122,8 @@
       title.style.fontSize = "10rem";
       const closeIcon = document.querySelector(".close-icon");
       closeIcon.style.display = "none";
+      const spider = document.querySelector(".spider");
+      spider.style.display = "inline-block";
     };
 
     const handleCloseIcon = () => {
