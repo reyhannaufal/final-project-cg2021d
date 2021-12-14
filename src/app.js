@@ -304,6 +304,7 @@ loader.load(
   (error) => console.log("An error happened")
 );
 
+//pine model
 loader.load(
   "/models/pine/scene.gltf",
   (gltf) => {
