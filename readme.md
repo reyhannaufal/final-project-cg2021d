@@ -1,5 +1,11 @@
 # Final Project CG2021D
-Haunted house i think? lol
+Niatnya bikin rumah hantu.....
+
+## Mamang yang ngerjain
+- William Handi Wijaya
+- Thomas Felix Brilliant
+- Reyhan Naufal Rahman
+
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
 Run this followed commands:
