@@ -14,7 +14,6 @@ import {
   graveTextureReflection,
   ripTexture,
 } from "./projectTextures";
-import { KeyDisplay } from "./character/characterUtils";
 import { CharacterControls } from "./character/characterControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 
@@ -87,8 +86,6 @@ window.addEventListener("resize", () => {
   // Update renderer
   renderer.setSize(sizes.width, sizes.height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-  keyDisplayQueue.updatePosition();
 });
 
 /**
@@ -173,11 +170,9 @@ const tick = () => {
 
 // Control Keys
 const keysPressed = {};
-const keyDisplayQueue = new KeyDisplay();
 const overlay = document.getElementById("overlay");
 const overlayText = document.getElementById("overlay-text");
 document.addEventListener("keydown", (event) => {
-  keyDisplayQueue.down(event.key);
   if (event.shiftKey && characterControls) {
     characterControls.switchRunToggle();
   } else {
@@ -206,7 +201,6 @@ document.addEventListener("keyup", (e) => {
     clock.elapsedTime = oldElapsedTime;
     return;
   }
-  keyDisplayQueue.up(e.key);
   keysPressed[e.key.toLowerCase()] = false;
 });
 
